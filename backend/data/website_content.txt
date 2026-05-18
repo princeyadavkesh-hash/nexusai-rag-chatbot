@@ -1,0 +1,208 @@
+```txt
+Ainwik Infotech is a leading IT training and software development institute focused on modern technologies, industry-ready skills, internships, certifications, and real-world projects.
+
+Ainwik provides professional training programs for students, freshers, working professionals, and career switchers. The institute focuses on practical learning, live project exposure, mentorship, and placement preparation.
+
+Locations:
+- Greater Noida, Uttar Pradesh, India
+- Lucknow, Uttar Pradesh, India
+
+Ainwik offers both online and offline classes.
+
+Courses offered by Ainwik Infotech include:
+
+Programming Courses:
+- Python Programming
+- Java Programming
+- C Programming
+- C++ Programming
+- JavaScript
+- TypeScript
+
+Web Development Courses:
+- HTML
+- CSS
+- Bootstrap
+- Tailwind CSS
+- React.js
+- Next.js
+- Node.js
+- Express.js
+- MongoDB
+- Full Stack Web Development
+
+Artificial Intelligence & Data Courses:
+- Machine Learning
+- Deep Learning
+- Artificial Intelligence
+- Data Science
+- Natural Language Processing
+- Computer Vision
+- Generative AI
+- Large Language Models (LLMs)
+- Prompt Engineering
+- RAG (Retrieval-Augmented Generation)
+- LangChain
+- AI Chatbot Development
+
+Cloud & DevOps Courses:
+- AWS
+- Docker
+- Kubernetes
+- CI/CD
+- Git & GitHub
+- Linux
+- DevOps Engineering
+
+Software Development Topics:
+- APIs
+- REST APIs
+- FastAPI
+- Django
+- Flask
+- Backend Development
+- Frontend Development
+- Full Stack Development
+
+Mobile App Development:
+- Android Development
+- Flutter Development
+
+Data Structures & Algorithms:
+- Arrays
+- Linked Lists
+- Trees
+- Graphs
+- Recursion
+- Sorting Algorithms
+- Searching Algorithms
+- Competitive Programming
+
+Database Technologies:
+- MySQL
+- PostgreSQL
+- MongoDB
+- Firebase
+
+Cybersecurity Topics:
+- Ethical Hacking Basics
+- Cybersecurity Fundamentals
+- Network Security
+
+Ainwik training includes:
+- Live classes
+- Recorded sessions
+- Practical assignments
+- Real-world projects
+- Internship opportunities
+- Project-based learning
+- Resume building
+- Mock interviews
+- Placement assistance
+- Certification programs
+- Industry mentorship
+
+Students at Ainwik work on real projects such as:
+- AI Chatbots
+- Resume Analyzer Systems
+- Face Recognition Systems
+- E-commerce Websites
+- Portfolio Websites
+- Blog Applications
+- AI Assistants
+- RAG Applications
+- Deep Learning Projects
+- Recommendation Systems
+
+Technologies taught at Ainwik:
+- Python
+- TensorFlow
+- PyTorch
+- React
+- Node.js
+- MongoDB
+- FastAPI
+- Docker
+- AWS
+- GitHub
+- LangChain
+- ChromaDB
+- HuggingFace
+- Groq API
+
+Ainwik focuses heavily on practical implementation instead of only theory.
+
+The institute helps students prepare for:
+- internships
+- software engineering jobs
+- AI engineering roles
+- data science roles
+- full stack developer roles
+
+Training modes:
+- Online training
+- Offline classroom training
+- Hybrid learning
+
+Features of Ainwik:
+- Beginner-friendly learning
+- Industry-focused curriculum
+- Hands-on coding
+- Mentor support
+- Affordable training
+- Modern AI technologies
+- Startup-oriented environment
+
+Who can join Ainwik:
+- School students
+- College students
+- BTech students
+- Beginners
+- Working professionals
+- Career changers
+
+Benefits of joining Ainwik:
+- Skill development
+- Industry exposure
+- Real project experience
+- Interview preparation
+- Placement guidance
+- Portfolio development
+
+Ainwik also helps students build:
+- GitHub portfolios
+- LinkedIn profiles
+- Resume projects
+- AI applications
+- Full-stack applications
+
+Ainwik internship programs provide:
+- live mentorship
+- project guidance
+- certificate of completion
+- internship experience
+- teamwork exposure
+
+The institute teaches modern AI concepts including:
+- Transformers
+- Fine-tuning
+- Embeddings
+- Vector Databases
+- Retrieval-Augmented Generation (RAG)
+- AI Agents
+- Prompt Engineering
+- LLM Applications
+
+Popular tools used during training:
+- VS Code
+- Postman
+- GitHub
+- Docker
+- Jupyter Notebook
+- Google Colab
+- HuggingFace
+- Groq
+- ChromaDB
+
+Ainwik encourages students to build production-ready projects and improve practical coding skills through continuous implementation and mentorship.
+```
