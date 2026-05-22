@@ -1,22 +1,19 @@
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import FakeEmbeddings
+import os
 
-
-embedding_model = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
-)
+embedding_model = FakeEmbeddings(size=384)
 
 
 def create_vectorstore():
+    if not os.path.exists("website_content.txt"):
+        return None
 
-    with open("data/website_content.txt", "r", encoding="utf-8") as file:
+    with open("website_content.txt", "r", encoding="utf-8") as file:
         text = file.read()
 
-    print(f"\nTotal text length: {len(text)}")
-
     if not text.strip():
-        print("website_content.txt is empty")
         return None
 
     splitter = RecursiveCharacterTextSplitter(
@@ -26,14 +23,13 @@ def create_vectorstore():
 
     chunks = splitter.split_text(text)
 
-    print(f"Created {len(chunks)} chunks")
+    if not chunks:
+        return None
 
     vectorstore = Chroma.from_texts(
         texts=chunks,
         embedding=embedding_model,
-        persist_directory="./vectorstore"
+        persist_directory="vectorstore"
     )
-
-    print(f"Stored {len(chunks)} chunks successfully.")
 
     return vectorstore
