@@ -5,7 +5,7 @@
  * Components and hooks import from here — never call fetch directly elsewhere.
  */
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
+const API_BASE_URL = "https://nexusai-rag-chatbot.onrender.com"
 
 /** Generic JSON POST helper with error normalisation. */
 async function post(path, body) {
