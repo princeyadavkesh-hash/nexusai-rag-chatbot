@@ -1,5 +1,3 @@
-// frontend/src/services/api.js
-
 const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export async function sendMessage(message) {
@@ -9,34 +7,27 @@ export async function sendMessage(message) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({
+        messages: [
+          {
+            content: message
+          }
+        ]
+      }),
     })
 
     if (!response.ok) {
       throw new Error('Failed to get response')
     }
 
-    const data = await response.json()
-    return data
+    return await response.json()
+
   } catch (error) {
     console.error(error)
     throw error
   }
 }
 
-export async function checkHealth() {
-  try {
-    const res = await fetch(`${BASE_URL}/health`)
-    return res.ok
-  } catch {
-    return false
-  }
-}
 export async function fetchSuggestions() {
-  return [
-    "Explain machine learning simply",
-    "What is deep learning?",
-    "Teach me Python basics",
-    "What is an AI agent?"
-  ]
+  return []
 }
