@@ -4,7 +4,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 export async function sendMessage(message) {
   try {
-    const response = await fetch(`${BASE_URL}/chat`, {
+    const response = await fetch(`${BASE_URL}/api/chat`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
