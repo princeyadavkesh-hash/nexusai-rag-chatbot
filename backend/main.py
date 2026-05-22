@@ -3,9 +3,10 @@ main.py — FastAPI application entry point
 Initializes the app, registers middleware, and mounts all route modules.
 """
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from contextlib import asynccontextmanager
 
 from config.settings import settings
 from routes import chat, health
@@ -27,10 +28,9 @@ app = FastAPI(
 )
 
 # ── CORS ──────────────────────────────────────────────────────────────────────
-# Allow the Vite dev server and any Vercel/Netlify deployment URL.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_ORIGINS,
+    allow_origins=["*"],  # Allow all origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
