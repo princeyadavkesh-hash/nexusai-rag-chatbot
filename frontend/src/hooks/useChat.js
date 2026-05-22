@@ -1,12 +1,5 @@
 /**
  * hooks/useChat.js — Core state machine for the chat experience.
- *
- * Manages:
- *  - messages array (conversation history)
- *  - onboarding flow
- *  - loading / error states
- *  - suggestion chips
- *  - calls to the API service layer
  */
 
 import { useState, useCallback, useRef } from 'react'
@@ -17,22 +10,28 @@ const ROLE = { USER: 'user', ASSISTANT: 'assistant' }
 
 export function useChat() {
   // ── State ──────────────────────────────────────────────────────────────────
-  const [messages, setMessages]         = useState([])
-  const [suggestions, setSuggestions]   = useState([])
-  const [isLoading, setIsLoading]       = useState(false)
-  const [error, setError]               = useState(null)
+  const [messages, setMessages] = useState([])
+  const [suggestions, setSuggestions] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
   const [onboardingStep, setOnboardingStep] = useState(0)
   const [isOnboarding, setIsOnboarding] = useState(true)
-  const [userName, setUserName]         = useState('')
-  const [useCase, setUseCase]           = useState('')
+  const [userName, setUserName] = useState('')
+  const [useCase, setUseCase] = useState('')
 
-  // Track the full message history for the API (includes system context)
+  // Track history
   const historyRef = useRef([])
 
   // ── Helpers ────────────────────────────────────────────────────────────────
 
   const appendMessage = useCallback((role, content) => {
-    const msg = { id: crypto.randomUUID(), role, content, timestamp: Date.now() }
+    const msg = {
+      id: crypto.randomUUID(),
+      role,
+      content,
+      timestamp: Date.now(),
+    }
+
     setMessages(prev => [...prev, msg])
     return msg
   }, [])
@@ -41,41 +40,51 @@ export function useChat() {
     historyRef.current = [...historyRef.current, { role, content }]
   }
 
-  // ── Onboarding flow ────────────────────────────────────────────────────────
+  // ── Onboarding ─────────────────────────────────────────────────────────────
 
-  /**
-   * Called when the user answers an onboarding question.
-   * Drives a guided multi-step welcome conversation.
-   */
   const handleOnboardingInput = useCallback(
     async (userText) => {
       appendMessage(ROLE.USER, userText)
 
       const step = ONBOARDING_STEPS[onboardingStep]
 
-      // Persist answers
-      if (step?.field === 'name')    setUserName(userText)
-      if (step?.field === 'useCase') setUseCase(userText)
+      if (step?.field === 'name') {
+        setUserName(userText)
+      }
+
+      if (step?.field === 'useCase') {
+        setUseCase(userText)
+      }
 
       const nextStep = onboardingStep + 1
 
       if (nextStep < ONBOARDING_STEPS.length) {
-        // Scripted onboarding reply
         setTimeout(() => {
           const reply = ONBOARDING_STEPS[nextStep].botMessage(userText)
+
           appendMessage(ROLE.ASSISTANT, reply)
+
           setOnboardingStep(nextStep)
-          setSuggestions(ONBOARDING_STEPS[nextStep].suggestions || [])
+
+          setSuggestions(
+            ONBOARDING_STEPS[nextStep].suggestions || []
+          )
         }, 600)
       } else {
-        // Onboarding done — seed history and unlock free chat
         setIsLoading(true)
-        const farewell = `Perfect! I'm all set to help you, ${userName || userText}. Ask me anything — I'm ready! 🚀`
+
+        const farewell = `Perfect! I'm all set to help you, ${
+          userName || userText
+        }. Ask me anything — I'm ready! 🚀`
+
         setTimeout(() => {
           appendMessage(ROLE.ASSISTANT, farewell)
+
           addToHistory(ROLE.ASSISTANT, farewell)
+
           setIsOnboarding(false)
           setIsLoading(false)
+
           setSuggestions([
             'What can you help me with?',
             'Explain machine learning simply',
@@ -84,45 +93,47 @@ export function useChat() {
         }, 700)
       }
     },
-    [onboardingStep, appendMessage, userName],
+    [onboardingStep, appendMessage, userName]
   )
 
-  // ── Free chat ──────────────────────────────────────────────────────────────
+  // ── Free Chat ──────────────────────────────────────────────────────────────
 
-  /**
-   * Send a user message to the AI and stream back the reply.
-   */
   const sendChat = useCallback(
     async (userText) => {
       if (!userText.trim() || isLoading) return
 
       setError(null)
       setSuggestions([])
+
       appendMessage(ROLE.USER, userText)
+
       addToHistory(ROLE.USER, userText)
+
       setIsLoading(true)
 
       try {
-        const data = await sendMessage(historyRef.current)
+        // FINAL FIX
+        const data = await sendMessage(userText)
+
         appendMessage(ROLE.ASSISTANT, data.reply)
+
         addToHistory(ROLE.ASSISTANT, data.reply)
 
-        // Fetch smart follow-up chips in the background
         fetchSuggestions(data.reply)
           .then(setSuggestions)
-          .catch(() => {}) // non-critical
+          .catch(() => {})
       } catch (err) {
-        setError(err.message || 'Something went wrong. Please try again.')
-        // Append a friendly error bubble
+        setError(err.message || 'Something went wrong')
+
         appendMessage(
           ROLE.ASSISTANT,
-          `⚠️ ${err.message || 'Could not reach the server. Is the backend running?'}`,
+          `⚠️ ${err.message || 'Could not reach server'}`
         )
       } finally {
         setIsLoading(false)
       }
     },
-    [isLoading, appendMessage],
+    [isLoading, appendMessage]
   )
 
   // ── Unified submit ─────────────────────────────────────────────────────────
@@ -135,7 +146,7 @@ export function useChat() {
         sendChat(text)
       }
     },
-    [isOnboarding, handleOnboardingInput, sendChat],
+    [isOnboarding, handleOnboardingInput, sendChat]
   )
 
   // ── Reset ──────────────────────────────────────────────────────────────────
@@ -149,14 +160,17 @@ export function useChat() {
     setIsOnboarding(true)
     setUserName('')
     setUseCase('')
+
     historyRef.current = []
   }, [])
 
-  // ── Bootstrap first onboarding message ────────────────────────────────────
+  // ── Start onboarding ───────────────────────────────────────────────────────
 
   const startOnboarding = useCallback(() => {
     const first = ONBOARDING_STEPS[0]
+
     appendMessage(ROLE.ASSISTANT, first.botMessage())
+
     setSuggestions(first.suggestions || [])
   }, [appendMessage])
 
