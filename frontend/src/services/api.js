@@ -32,3 +32,11 @@ export async function checkHealth() {
     return false
   }
 }
+export async function fetchSuggestions() {
+  return [
+    "Explain machine learning simply",
+    "What is deep learning?",
+    "Teach me Python basics",
+    "What is an AI agent?"
+  ]
+}
