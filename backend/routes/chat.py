@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from models.chat import ChatRequest
+from pydantic import BaseModel
 from services.groq_service import GroqService
 
 router = APIRouter()
@@ -7,12 +7,14 @@ router = APIRouter()
 svc = GroqService()
 
 
+class ChatRequest(BaseModel):
+    message: str
+
+
 @router.post("/chat")
 async def chat(request: ChatRequest):
 
-    latest_message = request.messages[-1].content
-
-    result = svc.generate_response(latest_message)
+    result = svc.generate_response(request.message)
 
     return {
         "reply": result["response"],
