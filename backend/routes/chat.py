@@ -1,14 +1,10 @@
 from fastapi import APIRouter
-from pydantic import BaseModel
+from models.chat import ChatRequest
 from services.groq_service import GroqService
 
 router = APIRouter()
 
 svc = GroqService()
-
-
-class ChatRequest(BaseModel):
-    message: str
 
 
 @router.post("/chat")
