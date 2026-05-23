@@ -8,15 +8,13 @@ export async function sendMessage(message) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        messages: [
-          {
-            content: message
-          }
-        ]
+        message: message
       }),
     })
 
     if (!response.ok) {
+      const errText = await response.text()
+      console.error(errText)
       throw new Error('Failed to get response')
     }
 
