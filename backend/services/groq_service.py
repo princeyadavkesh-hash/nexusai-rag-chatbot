@@ -1,11 +1,9 @@
 from groq import Groq
-from services.rag_service import create_vectorstore
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-vectorstore = create_vectorstore()
 
 class GroqService:
     def __init__(self):
@@ -14,46 +12,25 @@ class GroqService:
         )
 
     def generate_response(self, message):
-
-        docs = vectorstore.similarity_search(message, k=3)
-
-        context = "\n\n".join([doc.page_content for doc in docs])
-
-        prompt = f"""
-You are NexusAI.
-
-Answer ONLY using the provided context.
-
-Context:
-{context}
-
-Question:
-{message}
-"""
-
-        response = self.client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+        completion = self.client.chat.completions.create(
+            model="llama3-70b-8192",
             messages=[
                 {
                     "role": "user",
-                    "content": prompt
+                    "content": message
                 }
             ],
             temperature=0.7,
-            max_tokens=500
+            max_tokens=1024,
         )
 
-        answer = response.choices[0].message.content
-
-        suggestions = [
-            "Tell me about courses",
-            "Do you provide internships?",
-            "What technologies are taught?",
-            "Where is Ainwik located?"
-        ]
+        reply = completion.choices[0].message.content
 
         return {
-            "response": answer,
-            "suggestions": suggestions
+            "response": reply,
+            "suggestions": [
+                "Tell me more",
+                "Give an example",
+                "Explain simply"
+            ]
         }
-    
