@@ -10,9 +10,7 @@ svc = GroqService()
 @router.post("/chat")
 async def chat(request: ChatRequest):
 
-    user_message = request.messages[-1].content
-
-    result = svc.generate_response(user_message)
+    result = svc.generate_response(request.message)
 
     return {
         "reply": result["response"],
